@@ -27,38 +27,58 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* MODO DÍA */
     .theme-light {
       --bg-body: #FBFBFC;
       --card-bg: #FFFFFF;
-      --card-border: #EEEEEE;
-      --text-main: #1A1A1A;
-      --text-muted: #666666;
+      --card-border: #E5E7EB;
+      --text-main: #111827;
+      --text-muted: #4B5563;
+      --input-bg: #F3F4F6;
+      --input-text: #111827;
       --topbar-bg: #2B1608;
       --brand-brown: #331A0B;
-      --stage-bg: #F8F8F9;
+      --stage-bg: #F9FAFB;
+      --btn-secondary-bg: #E5E7EB;
+      --btn-secondary-text: #1F2937;
     }
 
+    /* MODO NOCHE */
     .theme-dark {
-      --bg-body: #0C0D10;
-      --card-bg: #15171C;
-      --card-border: #222630;
-      --text-main: #F5F5F7;
-      --text-muted: #9BA1B0;
-      --topbar-bg: #120A05;
-      --brand-brown: #4A2711;
-      --stage-bg: #0E0F14;
+      --bg-body: #090A0F;
+      --card-bg: #13151D;
+      --card-border: #232734;
+      --text-main: #FFFFFF;
+      --text-muted: #A1A7B5;
+      --input-bg: #1B1E29;
+      --input-text: #FFFFFF;
+      --topbar-bg: #180D05;
+      --brand-brown: #E58A4E;
+      --stage-bg: #0C0D12;
+      --btn-secondary-bg: #222634;
+      --btn-secondary-text: #F3F4F6;
     }
 
     body {
       background-color: var(--bg-body);
       color: var(--text-main);
       font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     .font-brand {
       font-family: 'Montserrat', sans-serif;
       letter-spacing: -0.03em;
+    }
+
+    input, select, textarea {
+      background-color: var(--input-bg) !important;
+      color: var(--input-text) !important;
+      border: 1px solid var(--card-border) !important;
+    }
+    input::placeholder, textarea::placeholder {
+      color: var(--text-muted) !important;
+      opacity: 0.8;
     }
 
     .product-card {
@@ -68,11 +88,12 @@
     }
     .product-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
     }
 
     .bottle-box {
       background-color: var(--stage-bg);
+      border: 1px solid var(--card-border);
     }
 
     @page { size: A4 portrait; margin: 0; }
@@ -96,56 +117,33 @@
   <header class="no-print sticky top-0 z-40 bg-[var(--card-bg)] border-b border-[var(--card-border)] px-4 py-3.5 transition-colors">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       
-      <!-- LOGOTIPO / TÍTULO DE TIENDA -->
+      <!-- MENÚ HAMBURGUESA Y LOGOTIPO -->
       <div class="flex items-center gap-3">
-        <div class="relative cursor-pointer" onclick="triggerLogoUpload()" title="Configurar Logotipo">
-          <div class="w-10 h-10 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-[var(--card-border)] flex items-center justify-center">
+        <button onclick="toggleSideMenu()" class="p-2 rounded-xl text-[var(--text-main)] hover:opacity-80 transition" style="background-color: var(--btn-secondary-bg);" title="Menú">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+
+        <div class="relative cursor-pointer" onclick="triggerLogoUpload()" title="Logotipo de la Tienda">
+          <div class="w-10 h-10 rounded-xl overflow-hidden bg-[var(--stage-bg)] border border-[var(--card-border)] flex items-center justify-center">
             <img id="nav-logo-img" src="" alt="Logo" class="hidden w-full h-full object-contain p-1">
-            <span id="nav-logo-icon" class="font-brand font-black text-sm text-[var(--brand-brown)] dark:text-orange-400">--</span>
+            <span id="nav-logo-icon" class="font-brand font-black text-sm text-[var(--brand-brown)]">--</span>
           </div>
           <input type="file" id="logo-input-file" accept="image/*" class="hidden" onchange="handleDirectLogoUpload(event)">
         </div>
 
         <div>
-          <h1 id="nav-store-name" class="font-brand font-black text-lg tracking-tight uppercase leading-none">Mi Tienda</h1>
+          <h1 id="nav-store-name" class="font-brand font-black text-lg tracking-tight uppercase leading-none text-[var(--text-main)]">Mi Tienda</h1>
           <span class="text-[10px] text-[var(--text-muted)] font-medium tracking-wide uppercase">Catálogo Oficial</span>
         </div>
       </div>
 
-      <!-- CONTROLES -->
+      <!-- TEMA Y BOLSA -->
       <div class="flex items-center gap-2">
-        <button onclick="toggleTheme()" class="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-[var(--text-main)] hover:bg-zinc-200 dark:hover:bg-zinc-700 transition" title="Modo Día/Noche">
+        <button onclick="toggleTheme()" class="p-2 rounded-xl text-[var(--text-main)] hover:opacity-80 transition" style="background-color: var(--btn-secondary-bg);" title="Modo Día/Noche">
           <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
         </button>
 
-        <button onclick="printCatalog()" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-xs font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition">
-          <i data-lucide="download" class="w-4 h-4"></i>
-          <span>PDF</span>
-        </button>
-
-        <button id="auth-btn" onclick="toggleAuthModal()" class="px-3 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-xs font-bold flex items-center gap-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition">
-          <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-          <span id="auth-btn-text">Admin</span>
-        </button>
-
-        <!-- ACCIONES DE ADMINISTRADOR -->
-        <div id="admin-actions" class="hidden flex items-center gap-1.5">
-          <button onclick="openTokenModal()" class="p-2 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/30" title="Token GitHub">
-            <i data-lucide="key" class="w-4 h-4"></i>
-          </button>
-          <button onclick="openStoreConfigModal()" class="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800" title="Datos de la Tienda">
-            <i data-lucide="settings" class="w-4 h-4"></i>
-          </button>
-          <button onclick="openFragranceModal()" class="px-3 py-2 rounded-xl bg-[#2B1608] dark:bg-orange-600 text-white text-xs font-bold flex items-center gap-1 shadow-sm">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            <span>Nuevo</span>
-          </button>
-          <button onclick="resetProfileClean()" class="p-2 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20" title="Limpiar todos los datos residuales">
-            <i data-lucide="trash" class="w-4 h-4"></i>
-          </button>
-        </div>
-
-        <button onclick="toggleCartDrawer()" class="px-3.5 py-2 rounded-xl bg-[#2B1608] dark:bg-zinc-100 text-white dark:text-black text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
+        <button onclick="toggleCartDrawer()" class="px-3.5 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
           <i data-lucide="shopping-bag" class="w-4 h-4"></i>
           <span>Bolsa (<span id="cart-count">0</span>)</span>
         </button>
@@ -154,13 +152,77 @@
     </div>
   </header>
 
+  <!-- MENÚ LATERAL (DRAWER IZQUIERDO) -->
+  <div id="side-menu-drawer" class="no-print fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex">
+    <div class="w-full max-w-xs bg-[var(--card-bg)] border-r border-[var(--card-border)] h-full p-5 flex flex-col justify-between shadow-2xl relative">
+      <div>
+        <!-- CABECERA DEL MENÚ -->
+        <div class="flex items-center justify-between pb-3 border-b border-[var(--card-border)] mb-4">
+          <span class="font-brand font-bold text-sm uppercase text-[var(--text-main)]">Navegación</span>
+          <button onclick="toggleSideMenu()" class="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)]">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- OPCIONES PARA CLIENTES -->
+        <div class="space-y-2 text-xs">
+          <a href="#" onclick="toggleSideMenu()" class="flex items-center gap-2.5 p-2.5 rounded-xl font-semibold text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition">
+            <i data-lucide="home" class="w-4 h-4 text-orange-500"></i>
+            <span>Catálogo Completo</span>
+          </a>
+          <button onclick="contactWhatsAppDirect(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl font-semibold text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition text-left">
+            <i data-lucide="message-circle" class="w-4 h-4 text-green-500"></i>
+            <span>Atención al Cliente</span>
+          </button>
+          <button onclick="printCatalog(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl font-semibold text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition text-left">
+            <i data-lucide="download" class="w-4 h-4 text-blue-500"></i>
+            <span>Descargar Catálogo (PDF)</span>
+          </button>
+        </div>
+
+        <!-- HERRAMIENTAS ACTIVAS CUANDO SE INICIA SESIÓN COMO ADMIN -->
+        <div id="admin-sidebar-tools" class="hidden mt-6 pt-4 border-t border-[var(--card-border)] space-y-2">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-orange-500 block px-2">Panel Propietario</span>
+          <button onclick="openFragranceModal(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl font-semibold text-white bg-orange-600 hover:bg-orange-500 transition text-left text-xs">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>+ Agregar Fragancia</span>
+          </button>
+          <button onclick="openStoreConfigModal(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2 rounded-xl font-medium text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition text-left text-xs">
+            <i data-lucide="settings" class="w-4 h-4 text-[var(--text-muted)]"></i>
+            <span>Datos de la Tienda</span>
+          </button>
+          <button onclick="openTokenModal(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2 rounded-xl font-medium text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition text-left text-xs">
+            <i data-lucide="key" class="w-4 h-4 text-orange-400"></i>
+            <span>Token de GitHub</span>
+          </button>
+          <button onclick="resetProfileClean(); toggleSideMenu();" class="w-full flex items-center gap-2.5 p-2 rounded-xl font-medium text-red-500 hover:bg-red-500/10 transition text-left text-xs">
+            <i data-lucide="trash" class="w-4 h-4"></i>
+            <span>Limpiar Datos Locales</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ACCESO DISCRETO AL FONDO DEL MENÚ -->
+      <div class="pt-4 border-t border-[var(--card-border)]">
+        <button id="auth-btn-drawer" onclick="toggleAuthModal(); toggleSideMenu();" class="w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--stage-bg)] transition">
+          <span class="flex items-center gap-2">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span id="auth-btn-text">Acceso Propietario</span>
+          </span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+    <div class="flex-1" onclick="toggleSideMenu()"></div>
+  </div>
+
   <!-- BANNER CABECERA -->
   <section class="no-print border-b border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-8">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
       <div>
-        <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase bg-orange-500/10 text-orange-600 dark:text-orange-400 mb-2">Colección Disponible</span>
+        <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase bg-orange-500/15 text-orange-400 mb-2">Colección Disponible</span>
         <h2 id="hero-title" class="font-brand text-3xl sm:text-4xl font-black uppercase text-[var(--text-main)]">CATÁLOGO EXCLUSIVO</h2>
-        <p id="hero-desc" class="text-xs sm:text-sm text-[var(--text-muted)] mt-1 max-w-lg">Configura la información de la tienda en el panel de administrador para personalizar esta sección.</p>
+        <p id="hero-desc" class="text-xs sm:text-sm text-[var(--text-muted)] mt-1 max-w-lg">Fragancias de diseñador, exclusivas y decants garantizados.</p>
       </div>
       <div class="flex items-center gap-3">
         <button onclick="contactWhatsAppDirect()" class="px-5 py-2.5 rounded-xl bg-[#25D366] text-black font-extrabold text-xs flex items-center gap-2 shadow-sm">
@@ -175,20 +237,20 @@
   <section class="no-print max-w-7xl w-full mx-auto px-4 pt-6">
     <div class="flex flex-wrap items-center justify-between gap-3 bg-[var(--card-bg)] border border-[var(--card-border)] p-3 rounded-2xl">
       <div class="flex-1 min-w-[240px] relative">
-        <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3.5 top-3"></i>
+        <i data-lucide="search" class="w-4 h-4 text-[var(--text-muted)] absolute left-3.5 top-3"></i>
         <input 
           type="text" 
           id="search-input" 
           oninput="renderCatalog()"
           placeholder="Buscar perfume, casa olfativa o notas..." 
-          class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl pl-10 pr-3 py-2 text-xs focus:outline-none focus:border-orange-500 transition"
+          class="w-full rounded-xl pl-10 pr-3 py-2 text-xs focus:outline-none focus:border-orange-500 transition"
         >
       </div>
       <div class="flex items-center gap-2">
-        <select id="filter-brand" onchange="renderCatalog()" class="bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2 text-xs font-medium focus:outline-none">
+        <select id="filter-brand" onchange="renderCatalog()" class="rounded-xl px-3 py-2 text-xs font-medium focus:outline-none">
           <option value="ALL">Todas las Marcas</option>
         </select>
-        <select id="currency-symbol" onchange="renderCatalog()" class="bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none">
+        <select id="currency-symbol" onchange="renderCatalog()" class="rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none">
           <option value="$">$ MXN</option>
           <option value="USD $">USD $</option>
         </select>
@@ -201,11 +263,11 @@
     <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
 
     <div id="empty-state" class="py-24 text-center">
-      <div class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto mb-3 text-zinc-400">
+      <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-[var(--text-muted)]" style="background-color: var(--stage-bg);">
         <i data-lucide="package-open" class="w-6 h-6"></i>
       </div>
-      <h3 class="font-brand font-bold text-base">Perfil limpio y listo para usarse</h3>
-      <p class="text-xs text-[var(--text-muted)] mt-1 max-w-sm mx-auto">Inicia sesión en el botón <b>Admin</b> con el usuario <b>ADOLFO</b> para agregar tu primer producto y llenar la información de la tienda.</p>
+      <h3 class="font-brand font-bold text-base text-[var(--text-main)]">Catálogo en Actualización</h3>
+      <p class="text-xs text-[var(--text-muted)] mt-1 max-w-sm mx-auto">Próximamente se añadirán nuevas fragancias y decants disponibles.</p>
     </div>
   </main>
 
@@ -213,7 +275,7 @@
   <footer class="no-print border-t border-[var(--card-border)] bg-[var(--card-bg)] py-8 px-4 text-xs transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
       <div>
-        <p class="font-brand font-extrabold uppercase text-sm" id="ft-brand-title">Catálogo Oficial</p>
+        <p class="font-brand font-extrabold uppercase text-sm text-[var(--text-main)]" id="ft-brand-title">Catálogo Oficial</p>
         <p class="text-[var(--text-muted)] text-[11px] mt-0.5" id="ft-brand-subtitle">Perfumería exclusiva y decants originales.</p>
       </div>
       <div class="flex items-center gap-4 text-[var(--text-muted)]">
@@ -225,118 +287,118 @@
   </footer>
 
   <!-- MODAL LOGIN ADMIN -->
-  <div id="login-modal" class="no-print fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div id="login-modal" class="no-print fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl w-full max-w-sm p-6 relative text-xs shadow-2xl">
-      <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <h3 class="font-brand font-extrabold text-base mb-1">Acceso Administrador</h3>
-      <p class="text-[var(--text-muted)] mb-4">Ingresa con tus credenciales.</p>
-      <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
+      <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-main)]"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <h3 class="font-brand font-extrabold text-base mb-1 text-[var(--text-main)]">Acceso Propietario</h3>
+      <p class="text-[var(--text-muted)] mb-4">Ingresa tus credenciales de administrador.</p>
+      <form onsubmit="handleLoginSubmit(event)" class="space-y-3" autocomplete="off">
         <div>
-          <label class="block font-semibold mb-1">Usuario</label>
-          <input type="text" id="login-user" required placeholder="ADOLFO" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2 focus:outline-none">
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Usuario</label>
+          <input type="text" id="login-user" required autocomplete="off" class="w-full rounded-xl px-3 py-2 focus:outline-none">
         </div>
         <div>
-          <label class="block font-semibold mb-1">Contraseña</label>
-          <input type="password" id="login-pass" required placeholder="123456789" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2 focus:outline-none">
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Contraseña</label>
+          <input type="password" id="login-pass" required autocomplete="new-password" class="w-full rounded-xl px-3 py-2 focus:outline-none">
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-xl bg-[#2B1608] dark:bg-orange-600 text-white font-extrabold transition">Entrar al Panel</button>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-extrabold transition">Iniciar Sesión</button>
       </form>
     </div>
   </div>
 
   <!-- MODAL TOKEN GITHUB -->
-  <div id="token-modal" class="no-print fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div id="token-modal" class="no-print fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl w-full max-w-md p-6 relative text-xs shadow-2xl">
-      <button onclick="closeTokenModal()" class="absolute top-4 right-4 text-zinc-400"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <h3 class="font-brand font-extrabold text-base mb-1">Token de GitHub</h3>
-      <p class="text-[var(--text-muted)] mb-3">Ingresa tu Personal Access Token para sincronizar el catálogo automáticamente con el repositorio.</p>
+      <button onclick="closeTokenModal()" class="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-main)]"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <h3 class="font-brand font-extrabold text-base mb-1 text-[var(--text-main)]">Token de GitHub</h3>
+      <p class="text-[var(--text-muted)] mb-3">Ingresa tu Personal Access Token para sincronizar el catálogo automáticamente.</p>
       <form onsubmit="saveGitHubToken(event)" class="space-y-3">
-        <input type="password" id="github-token-input" required placeholder="ghp_..." class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2 focus:outline-none">
+        <input type="password" id="github-token-input" required placeholder="ghp_..." class="w-full rounded-xl px-3 py-2 focus:outline-none">
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeTokenModal()" class="px-4 py-2 rounded-xl bg-zinc-200 dark:bg-zinc-800 font-semibold">Cancelar</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-[#2B1608] dark:bg-orange-600 text-white font-bold">Guardar Token</button>
+          <button type="button" onclick="closeTokenModal()" class="px-4 py-2 rounded-xl text-[var(--btn-secondary-text)]" style="background-color: var(--btn-secondary-bg);">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold">Guardar Token</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- MODAL CONFIGURACIÓN DE TIENDA -->
-  <div id="store-modal" class="no-print fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div id="store-modal" class="no-print fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl w-full max-w-md p-6 relative text-xs shadow-2xl">
-      <button onclick="closeStoreConfigModal()" class="absolute top-4 right-4 text-zinc-400"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <h3 class="font-brand font-extrabold text-base mb-3">Configurar Datos de la Tienda</h3>
+      <button onclick="closeStoreConfigModal()" class="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-main)]"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <h3 class="font-brand font-extrabold text-base mb-3 text-[var(--text-main)]">Configurar Datos de la Tienda</h3>
       <form onsubmit="handleStoreConfigSubmit(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">Nombre Comercial de la Tienda</label>
-          <input type="text" id="cfg-name" required placeholder="Ej: Adolfo Vidal Perfumería" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2">
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Nombre Comercial de la Tienda</label>
+          <input type="text" id="cfg-name" required placeholder="Nombre comercial" class="w-full rounded-xl px-3 py-2">
         </div>
         <div>
-          <label class="block font-semibold mb-1">Subtítulo / Eslogan</label>
-          <input type="text" id="cfg-tagline" placeholder="Ej: Decants selectos y botellas bajo pedido" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2">
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Subtítulo / Eslogan</label>
+          <input type="text" id="cfg-tagline" placeholder="Eslogan de la tienda" class="w-full rounded-xl px-3 py-2">
         </div>
         <div>
-          <label class="block font-semibold mb-1 text-orange-600">WhatsApp para recibir Pedidos (incluye lada)</label>
-          <input type="text" id="cfg-whatsapp" required placeholder="Ej: +52 123 456 7890" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2">
+          <label class="block font-semibold mb-1 text-orange-400">WhatsApp para recibir Pedidos (incluye lada)</label>
+          <input type="text" id="cfg-whatsapp" required placeholder="Ej: +52..." class="w-full rounded-xl px-3 py-2">
         </div>
         <div>
-          <label class="block font-semibold mb-1">Información de Envíos / Entregas</label>
-          <input type="text" id="cfg-shipping" placeholder="Ej: Envíos express a toda la república" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-2">
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Información de Envíos / Entregas</label>
+          <input type="text" id="cfg-shipping" placeholder="Información de envíos y entregas" class="w-full rounded-xl px-3 py-2">
         </div>
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeStoreConfigModal()" class="px-4 py-2 rounded-xl bg-zinc-200 dark:bg-zinc-800">Cancelar</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-[#2B1608] dark:bg-orange-600 text-white font-bold">Guardar Datos</button>
+          <button type="button" onclick="closeStoreConfigModal()" class="px-4 py-2 rounded-xl text-[var(--btn-secondary-text)]" style="background-color: var(--btn-secondary-bg);">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold">Guardar Datos</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- MODAL AGREGAR / EDITAR PERFUME -->
-  <div id="fragrance-modal" class="no-print fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+  <div id="fragrance-modal" class="no-print fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl w-full max-w-lg p-6 relative text-xs shadow-2xl my-auto">
-      <button onclick="closeFragranceModal()" class="absolute top-4 right-4 text-zinc-400"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <h3 id="frag-modal-title" class="font-brand font-extrabold text-base mb-3">Agregar Fragancia</h3>
+      <button onclick="closeFragranceModal()" class="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-main)]"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <h3 id="frag-modal-title" class="font-brand font-extrabold text-base mb-3 text-[var(--text-main)]">Agregar Fragancia</h3>
       
       <form id="fragrance-form" onsubmit="handleFragranceSubmit(event)" class="space-y-3">
         <input type="hidden" id="edit-frag-id" value="">
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">Nombre</label>
-            <input type="text" id="form-name" required placeholder="Ej: Imagination" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-1.5">
+            <label class="block font-semibold mb-1 text-[var(--text-main)]">Nombre</label>
+            <input type="text" id="form-name" required placeholder="Nombre de la fragancia" class="w-full rounded-xl px-3 py-1.5">
           </div>
           <div>
-            <label class="block font-semibold mb-1">Marca / Casa</label>
-            <input type="text" id="form-brand" required placeholder="Ej: Louis Vuitton" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-1.5">
+            <label class="block font-semibold mb-1 text-[var(--text-main)]">Marca / Casa</label>
+            <input type="text" id="form-brand" required placeholder="Casa o diseñador" class="w-full rounded-xl px-3 py-1.5">
           </div>
         </div>
 
         <div class="grid grid-cols-3 gap-2">
           <div>
-            <label class="block font-semibold mb-1">Concentración</label>
-            <input type="text" id="form-conc" placeholder="EDP, Parfum..." class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-2.5 py-1.5">
+            <label class="block font-semibold mb-1 text-[var(--text-main)]">Concentración</label>
+            <input type="text" id="form-conc" placeholder="EDP, Parfum..." class="w-full rounded-xl px-2.5 py-1.5">
           </div>
           <div>
-            <label class="block font-semibold mb-1">Género</label>
-            <select id="form-gender" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-2 py-1.5">
+            <label class="block font-semibold mb-1 text-[var(--text-main)]">Género</label>
+            <select id="form-gender" class="w-full rounded-xl px-2 py-1.5">
               <option value="Unisex">Unisex</option>
               <option value="Caballero">Caballero</option>
               <option value="Dama">Dama</option>
             </select>
           </div>
           <div>
-            <label class="block font-semibold mb-1">Modalidad</label>
-            <select id="form-mode" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-2 py-1.5">
+            <label class="block font-semibold mb-1 text-[var(--text-main)]">Modalidad</label>
+            <select id="form-mode" class="w-full rounded-xl px-2 py-1.5">
               <option value="stock">Entrega Inmediata</option>
               <option value="order">Bajo Pedido</option>
             </select>
           </div>
         </div>
 
-        <div class="p-3 rounded-xl bg-[var(--stage-bg)] border border-[var(--card-border)]">
-          <label class="block font-bold mb-1">Foto de la Botella</label>
+        <div class="p-3 rounded-xl border border-[var(--card-border)]" style="background-color: var(--stage-bg);">
+          <label class="block font-bold mb-1 text-[var(--text-main)]">Foto de la Botella</label>
           <div class="flex items-center gap-3">
-            <input type="text" id="form-image-url" placeholder="URL directa de la imagen" class="flex-1 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-lg px-2.5 py-1 text-[11px]">
-            <label class="cursor-pointer px-3 py-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg text-[10px] font-bold">
+            <input type="text" id="form-image-url" placeholder="URL directa de la imagen" class="flex-1 rounded-lg px-2.5 py-1 text-[11px]">
+            <label class="cursor-pointer px-3 py-1 rounded-lg text-[10px] font-bold text-[var(--btn-secondary-text)]" style="background-color: var(--btn-secondary-bg);">
               Subir Foto
               <input type="file" accept="image/*" class="hidden" onchange="handleFragrancePhotoUpload(event)">
             </label>
@@ -347,36 +409,36 @@
           </div>
         </div>
 
-        <div class="p-3 rounded-xl bg-[var(--stage-bg)] border border-[var(--card-border)] space-y-2">
-          <span class="block font-bold text-[11px] uppercase tracking-wider text-orange-600">Precios y Tamaños</span>
+        <div class="p-3 rounded-xl border border-[var(--card-border)] space-y-2" style="background-color: var(--stage-bg);">
+          <span class="block font-bold text-[11px] uppercase tracking-wider text-orange-400">Precios y Tamaños</span>
           <div class="grid grid-cols-4 gap-2 text-center">
             <div>
-              <span class="text-[10px] font-semibold block mb-0.5">3 ml</span>
-              <input type="number" id="p-3ml" placeholder="0" class="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded px-1.5 py-1 text-center font-bold">
+              <span class="text-[10px] font-semibold block mb-0.5 text-[var(--text-muted)]">3 ml</span>
+              <input type="number" id="p-3ml" placeholder="0" class="w-full rounded px-1.5 py-1 text-center font-bold">
             </div>
             <div>
-              <span class="text-[10px] font-semibold block mb-0.5">5 ml</span>
-              <input type="number" id="p-5ml" placeholder="0" class="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded px-1.5 py-1 text-center font-bold">
+              <span class="text-[10px] font-semibold block mb-0.5 text-[var(--text-muted)]">5 ml</span>
+              <input type="number" id="p-5ml" placeholder="0" class="w-full rounded px-1.5 py-1 text-center font-bold">
             </div>
             <div>
-              <span class="text-[10px] font-semibold block mb-0.5">10 ml</span>
-              <input type="number" id="p-10ml" placeholder="0" class="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded px-1.5 py-1 text-center font-bold">
+              <span class="text-[10px] font-semibold block mb-0.5 text-[var(--text-muted)]">10 ml</span>
+              <input type="number" id="p-10ml" placeholder="0" class="w-full rounded px-1.5 py-1 text-center font-bold">
             </div>
             <div>
-              <span class="text-[10px] font-semibold block mb-0.5">Botella</span>
-              <input type="number" id="p-bottle" placeholder="0" class="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded px-1.5 py-1 text-center font-bold">
+              <span class="text-[10px] font-semibold block mb-0.5 text-[var(--text-muted)]">Botella</span>
+              <input type="number" id="p-bottle" placeholder="0" class="w-full rounded px-1.5 py-1 text-center font-bold">
             </div>
           </div>
         </div>
 
         <div>
-          <label class="block font-semibold mb-1">Notas Olfativas</label>
-          <textarea id="form-notes" rows="2" placeholder="Notas de salida, corazón y fondo..." class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-xl px-3 py-1.5"></textarea>
+          <label class="block font-semibold mb-1 text-[var(--text-main)]">Notas Olfativas</label>
+          <textarea id="form-notes" rows="2" placeholder="Notas de salida, corazón y fondo..." class="w-full rounded-xl px-3 py-1.5"></textarea>
         </div>
 
         <div class="flex justify-end gap-2 pt-2 border-t border-[var(--card-border)]">
-          <button type="button" onclick="closeFragranceModal()" class="px-4 py-2 rounded-xl bg-zinc-200 dark:bg-zinc-800">Cancelar</button>
-          <button type="submit" class="px-5 py-2 rounded-xl bg-[#2B1608] dark:bg-orange-600 text-white font-bold">Guardar Fragancia</button>
+          <button type="button" onclick="closeFragranceModal()" class="px-4 py-2 rounded-xl text-[var(--btn-secondary-text)]" style="background-color: var(--btn-secondary-bg);">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold">Guardar Fragancia</button>
         </div>
       </form>
     </div>
@@ -386,24 +448,24 @@
   <div id="cart-drawer" class="no-print fixed inset-y-0 right-0 z-50 w-full max-w-md bg-[var(--card-bg)] border-l border-[var(--card-border)] shadow-2xl p-5 flex flex-col justify-between hidden text-xs">
     <div>
       <div class="flex items-center justify-between pb-3 border-b border-[var(--card-border)] mb-3">
-        <h3 class="font-brand font-extrabold text-sm uppercase">Bolsa de Pedido</h3>
-        <button onclick="toggleCartDrawer()"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 class="font-brand font-extrabold text-sm uppercase text-[var(--text-main)]">Bolsa de Pedido</h3>
+        <button onclick="toggleCartDrawer()" class="text-[var(--text-muted)] hover:text-[var(--text-main)]"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
       <div id="cart-items" class="space-y-2 overflow-y-auto max-h-[40vh] pr-1"></div>
 
       <div class="mt-4 pt-3 border-t border-[var(--card-border)] space-y-2">
-        <span class="font-bold text-[11px] uppercase tracking-wider block text-orange-600">Datos para la Entrega</span>
-        <input type="text" id="cust-name" placeholder="Nombre Completo *" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-lg px-2.5 py-1.5">
-        <input type="tel" id="cust-phone" placeholder="Teléfono *" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-lg px-2.5 py-1.5">
-        <input type="text" id="cust-address" placeholder="Dirección / Ciudad *" class="w-full bg-[var(--stage-bg)] border border-[var(--card-border)] rounded-lg px-2.5 py-1.5">
+        <span class="font-bold text-[11px] uppercase tracking-wider block text-orange-400">Datos para la Entrega</span>
+        <input type="text" id="cust-name" placeholder="Nombre Completo *" class="w-full rounded-lg px-2.5 py-1.5">
+        <input type="tel" id="cust-phone" placeholder="Teléfono *" class="w-full rounded-lg px-2.5 py-1.5">
+        <input type="text" id="cust-address" placeholder="Dirección / Ciudad *" class="w-full rounded-lg px-2.5 py-1.5">
       </div>
     </div>
 
     <div class="pt-4 border-t border-[var(--card-border)]">
-      <div class="flex justify-between items-center text-sm font-bold mb-3">
+      <div class="flex justify-between items-center text-sm font-bold mb-3 text-[var(--text-main)]">
         <span>Total:</span>
-        <span id="cart-total" class="font-brand font-black text-lg text-orange-600">$0</span>
+        <span id="cart-total" class="font-brand font-black text-lg text-orange-400">$0</span>
       </div>
       <button onclick="checkoutWhatsApp()" class="w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-black font-extrabold flex items-center justify-center gap-2 shadow transition">
         <i data-lucide="message-circle" class="w-4 h-4"></i>
@@ -413,14 +475,12 @@
   </div>
 
   <div id="print-sheet" class="hidden"></div>
-  <div id="toast" class="no-print fixed bottom-4 right-4 z-50 bg-[#2B1608] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+  <div id="toast" class="no-print fixed bottom-4 right-4 z-50 bg-[#1B1E29] border border-zinc-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none"></div>
 
   <script>
-    // CREDENCIALES DE ACCESO
     const ADMIN_USER = "ADOLFO";
     const ADMIN_PASS = "123456789";
 
-    // LIENZO COMPLETAMENTE EN BLANCO (Sin datos preestablecidos)
     let storeConfig = {
       name: "",
       tagline: "",
@@ -433,24 +493,20 @@
     let cart = [];
     let isAdmin = false;
 
-    // LLAVES DE ALMACENAMIENTO INDEPENDIENTES
     const KEY_STORE = "av_catalogo_store";
     const KEY_FRAGS = "av_catalogo_frags";
     const KEY_TOKEN = "av_catalogo_token";
     const KEY_THEME = "av_catalogo_theme";
 
     function initApp() {
-      // 1. Borrar cualquier rastro de la tienda anterior si existía en este navegador
       ['ds_store_config', 'ds_fragrances', 'ds_store_logo', 'aura_store_config', 'aura_fragrances'].forEach(k => {
         try { localStorage.removeItem(k); } catch(e){}
       });
 
-      // 2. Cargar tema
       const savedTheme = localStorage.getItem(KEY_THEME) || 'theme-light';
       document.documentElement.className = savedTheme;
       updateThemeIcon(savedTheme);
 
-      // 3. Cargar datos propios limpios
       try {
         const localStore = localStorage.getItem(KEY_STORE);
         if (localStore) storeConfig = { ...storeConfig, ...JSON.parse(localStore) };
@@ -465,8 +521,12 @@
       updateCartUI();
       lucide.createIcons();
 
-      // Consultar repositorio si ya tiene su propio archivo R9.json
       fetchRemote();
+    }
+
+    function toggleSideMenu() {
+      const drawer = document.getElementById('side-menu-drawer');
+      drawer.classList.toggle('hidden');
     }
 
     function resetProfileClean() {
@@ -654,11 +714,11 @@
                 <span class="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-extrabold uppercase text-white bg-orange-600">
                   ${isOrder ? 'BAJO PEDIDO' : 'NUEVO'}
                 </span>
-                <img src="${f.image || 'https://placehold.co/400x400/F8F8F9/331A0B?text=' + encodeURIComponent(f.name)}" alt="${f.name}" class="max-h-full max-w-full object-contain">
+                <img src="${f.image || 'https://placehold.co/400x400/181A20/FFFFFF?text=' + encodeURIComponent(f.name)}" alt="${f.name}" class="max-h-full max-w-full object-contain">
                 ${isAdmin ? `
-                  <div class="absolute top-2 right-2 flex gap-1 bg-white/90 dark:bg-black/80 rounded-lg p-1 shadow">
-                    <button onclick="editFragrance('${f.id}')" class="p-1 hover:text-orange-500"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
-                    <button onclick="deleteFragrance('${f.id}')" class="p-1 hover:text-red-500"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                  <div class="absolute top-2 right-2 flex gap-1 rounded-lg p-1 shadow" style="background-color: var(--card-bg);">
+                    <button onclick="editFragrance('${f.id}')" class="p-1 text-[var(--text-muted)] hover:text-orange-400"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
+                    <button onclick="deleteFragrance('${f.id}')" class="p-1 text-[var(--text-muted)] hover:text-red-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                   </div>
                 ` : ''}
               </div>
@@ -678,9 +738,9 @@
                 ${['3ml', '5ml', '10ml', 'bottle'].map(sz => {
                   const pr = f.prices?.[sz] || 0;
                   const label = sz === 'bottle' ? 'Botella' : sz;
-                  if (!pr) return `<div class="p-1 rounded bg-[var(--stage-bg)] text-zinc-400 opacity-40">${label}</div>`;
+                  if (!pr) return `<div class="p-1 rounded opacity-40 text-[var(--text-muted)]" style="background-color: var(--stage-bg);">${label}</div>`;
                   return `
-                    <button onclick="addToCart('${f.id}','${sz}',${pr})" class="p-1 rounded bg-[var(--stage-bg)] hover:bg-orange-500 hover:text-white transition font-semibold">
+                    <button onclick="addToCart('${f.id}','${sz}',${pr})" class="p-1 rounded hover:bg-orange-600 hover:text-white transition font-semibold text-[var(--text-main)]" style="background-color: var(--stage-bg); border: 1px solid var(--card-border);">
                       <span class="block text-[8px] text-[var(--text-muted)]">${label}</span>
                       <span>$${pr}</span>
                     </button>
@@ -712,19 +772,19 @@
         total += it.price * it.qty;
         count += it.qty;
         return `
-          <div class="flex items-center justify-between p-2 rounded-xl bg-[var(--stage-bg)] border border-[var(--card-border)]">
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-[var(--card-border)]" style="background-color: var(--stage-bg);">
             <div>
-              <strong class="block text-xs">${it.brand} - ${it.name}</strong>
+              <strong class="block text-xs text-[var(--text-main)]">${it.brand} - ${it.name}</strong>
               <span class="text-[10px] text-[var(--text-muted)]">${it.size === 'bottle' ? 'Botella Completa' : 'Decant ' + it.size} ($${it.price})</span>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="cartQty(${idx}, -1)" class="w-5 h-5 rounded bg-zinc-200 dark:bg-zinc-700 font-bold">−</button>
-              <span>${it.qty}</span>
-              <button onclick="cartQty(${idx}, 1)" class="w-5 h-5 rounded bg-zinc-200 dark:bg-zinc-700 font-bold">+</button>
+              <button onclick="cartQty(${idx}, -1)" class="w-6 h-6 rounded flex items-center justify-center font-bold text-[var(--text-main)]" style="background-color: var(--btn-secondary-bg);">−</button>
+              <span class="text-[var(--text-main)] font-semibold">${it.qty}</span>
+              <button onclick="cartQty(${idx}, 1)" class="w-6 h-6 rounded flex items-center justify-center font-bold text-[var(--text-main)]" style="background-color: var(--btn-secondary-bg);">+</button>
             </div>
           </div>
         `;
-      }).join('') : '<p class="text-center py-6 text-zinc-400">Tu bolsa está vacía</p>';
+      }).join('') : '<p class="text-center py-6 text-[var(--text-muted)]">Tu bolsa está vacía</p>';
 
       document.getElementById('cart-count').textContent = count;
       document.getElementById('cart-total').textContent = formatPrice(total);
@@ -782,10 +842,10 @@
     function toggleAuthModal() {
       if (isAdmin) {
         isAdmin = false;
-        document.getElementById('admin-actions').classList.add('hidden');
-        document.getElementById('auth-btn-text').textContent = 'Admin';
+        document.getElementById('admin-sidebar-tools').classList.add('hidden');
+        document.getElementById('auth-btn-text').textContent = 'Acceso Propietario';
         renderCatalog();
-        showToast('Sesión cerrada');
+        showToast('Sesión de administrador cerrada');
       } else {
         document.getElementById('login-modal').classList.remove('hidden');
       }
@@ -799,10 +859,10 @@
       if (u.toUpperCase() === ADMIN_USER && p === ADMIN_PASS) {
         isAdmin = true;
         document.getElementById('login-modal').classList.add('hidden');
-        document.getElementById('admin-actions').classList.remove('hidden');
-        document.getElementById('auth-btn-text').textContent = 'Salir';
+        document.getElementById('admin-sidebar-tools').classList.remove('hidden');
+        document.getElementById('auth-btn-text').textContent = 'Cerrar Sesión Propietario';
         renderCatalog();
-        showToast('¡Modo Administrador activado!');
+        showToast('¡Modo Propietario activado! Opciones disponibles en el menú lateral');
       } else {
         showToast('Usuario o contraseña incorrectos');
       }
@@ -962,7 +1022,7 @@
     }
 
     function triggerLogoUpload() {
-      if (!isAdmin) return toggleAuthModal();
+      if (!isAdmin) return;
       document.getElementById('logo-input-file').click();
     }
 
